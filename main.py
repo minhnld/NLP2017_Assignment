@@ -3,6 +3,7 @@
 If there are any problems, contact me at mail@hoanglehaithanh.com or 1413492@hcmut.edu.vn 
 This project is under [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0) (Inherit from NLTK)
 """
+
 import nltk
 from nltk import grammar, parse
 import argparse
@@ -59,7 +60,7 @@ if __name__ == '__main__':
     
     parser.add_argument(
       '--question',
-      default= "Which flight to Huế city arrives at 20:00HR ?",
+      default= "When does the flights to Huế city arrive?",
       help= "Question to be parsed. Default = 'Which flight to Huế city arrives at 20:00HR ?'"
       )
     

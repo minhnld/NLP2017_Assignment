@@ -1,1 +1,1 @@
-(PRINT-ALL ?f2(FLIGHT ?f2)(ATIME ?f2 HUE 20:00HR)(DTIME ?f2 ?sd ?td))
+(PRINT-ALL ?t1(FLIGHT ?f2)(ATIME ?f2 HUE ?t1)(DTIME ?f2 ?sd ?td))

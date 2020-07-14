@@ -3,6 +3,7 @@
 If there are any problems, contact me at mail@hoanglehaithanh.com or 1413492@hcmut.edu.vn 
 This project is under [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0) (Inherit from NLTK)
 """
+import sys
 
 file_name=["output_a.txt",
            "output_b.txt",
@@ -11,8 +12,6 @@ file_name=["output_a.txt",
            "output_e.txt"]
 
 def write_file(question_number, content):
-    file = open(file_name[question_number-1], 'w')
+    file = open(file_name[question_number-1], 'w', encoding='utf-8')
     file.write(content)
     file.close()
-        
-    
