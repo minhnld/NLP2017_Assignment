@@ -8,24 +8,31 @@ raw_database = [
                     "(BUS B1)",
                     "(ATIME B1 HUE 22:00HR)",
                     "(DTIME B1 HCMC 10:00HR)",
+                    "(RUN-TIME B1 HCMC HUE 12:00 HR)",
                     "(BUS B2)",
                     "(ATIME B2 HUE 22:30HR)",
                     "(DTIME B2 HCMC 12:30HR)",
+                    "(RUN-TIME B2 HCMC HUE 10:00 HR)"
                     "(BUS B3)",
                     "(ATIME B3 HCMC 5:00HR)",
                     "(DTIME B3 DANANG 17:30HR)",
+                    "(RUN-TIME B3 DANANG HMC 14:00 HR)",
                     "(BUS B4)",
                     "(ATIME B4 HCMC 5:30HR)",
                     "(DTIME B4 DANANG 17:30HR)",
+                    "(RUN-TIME B4 HCMC DANANG 12:00 HR)",
                     "(BUS B5)",
                     "(ATIME B5 DANANG 13:30HR)",
                     "(DTIME B5 HUE 08:30HR)",
+                    "(RUN-TIME B5 DANANG HUE 5:00 HR)",
                     "(BUS B6)",
                     "(ATIME B6 DANANG 9:30HR)",
                     "(DTIME B6 HUE 5:30HR)",
+                    "(RUN-TIME B6 DANANG HUE 4:00 HR)",
                     "(BUS B7)",
                     "(ATIME B7 HCMC 20:30HR)",
-                    "(DTIME B7 HUE 8:30HR)"
+                    "(DTIME B7 HUE 8:30HR)",
+                    "(RUN-TIME B7 HCMC HUE 12:00 HR)"
                 ]
 
 def categorize_database(database):
@@ -39,9 +46,12 @@ def categorize_database(database):
     buss = [data.replace('(','').replace(')','') for data in database if 'BUS' in data]
     arrival_times = [data.replace('(','').replace(')','') for data in database if 'ATIME' in data]
     departure_times = [data.replace('(','').replace(')','') for data in database if 'DTIME' in data]
+    run_times=[data.replace('(','').replace(')','') for data in database if 'RUN-TIME' in data]
+    
     return {'bus': buss, 
             'arrival':arrival_times, 
-            'departure':departure_times}
+            'departure':departure_times,
+            'runtime':run_times}
 
 def retrieve_result(semantics):
     """
@@ -78,10 +88,18 @@ def retrieve_result(semantics):
                               and procedure_semantics['departure_time'] in d
                               and d.split()[1] in arrival_bus_result]
 
+    runtime_bus_result = [d.split()[4] for d in database['runtime'] 
+                              if procedure_semantics['departure_location'] in d
+                              and procedure_semantics['arrival_location'] in d
+                              and d.split()[1] in arrival_bus_result
+                              and d.split()[1] in departure_bus_result]    
+
     if result_type == 'bus':
         result = departure_bus_result
     elif result_type == 'arrival_time':
         result = [a.split()[3] for a in database['arrival'] if a.split()[1] in departure_bus_result]
-    else:
+    elif result_type == 'departure_time':
         result = [d.split()[3] for d in database['departure'] if d.split()[1] in departure_bus_result]
+    else:
+        result = [d.split()[4] for d in database['runtime'] if d.split()[1] in runtime_bus_result]
     return result

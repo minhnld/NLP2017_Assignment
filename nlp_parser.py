@@ -11,7 +11,6 @@ def parse_to_procedure(logical_tree):
     arrival_time = '?ta'
     departure_location = '?sd'
     departure_time = '?td'
-    
     #[<ApplicationExpression ARRIVE1(a3,f2,TIME(t2,20:00HR))>, <AndExpression (bus1(f2) & DEST(f2,NAME(h3,'Hue')))>, <ApplicationExpression WH(f2,WHICH1)>]
     verb_expression, bus_expression, wh_expression = logical_expression.args
     gap = '?' + str(logical_tree.label()['GAP'])
@@ -19,44 +18,58 @@ def parse_to_procedure(logical_tree):
     #---------Check bus Expression------------#
     np_variables = bus_expression.variables()
     np_preds = [pred.name for pred in bus_expression.predicates()]
-    
-    if 'DEST' in np_preds:
-        #DEST(f (NAME(a,B)))
-        arrival_location = list(bus_expression.constants())[0].name
-    else:
-        #SOURCE(f, NAME(a,B))
-        departure_location = list(bus_expression.constants())[0].name
-        
-    #Get bus variable (f1 or f2 or ...)
+
+     #Get bus variable (f1 or f2 or ...)
     f = '?'+ [variable.name for variable in np_variables if 'f' in variable.name][0]
-    
     #-------------Check Verb expression-------------#
     verb_pred_list = [pred.name for pred in verb_expression.predicates()]
-    
+
+    try:
+        if 'DEST' in np_preds:
+            #DEST(f (NAME(a,B)))
+            arrival_location = list(bus_expression.constants())[0].name.replace("'","")
+        else:
+            #SOURCE(f, NAME(a,B))
+            departure_location = list(bus_expression.constants())[0].name.replace("'","")
+    except:
+        if 'DEST' in verb_pred_list:
+            #DEST(f (NAME(a,B)))
+            arrival_location = list(verb_expression.constants())[0].name.replace("'","")
+        else:
+            #SOURCE(f, NAME(a,B))
+            departure_location = list(verb_expression.constants())[0].name.replace("'","")
+            
     #In case of this assignment, this condition will be always TRUE
     #because time must be specified or be asked in all questions
-    if 'TIME' in verb_pred_list:
-        time_expression = verb_expression.args[2]
-        if len(time_expression.args) == 1:
-            #TIME(t)
-            time = str(time_expression.args[0])
-        else:
-            #TIME(t,HOUR) (ex: TIME(t1,1600HR))
-            time = str(time_expression.args[1])
+    try:
+        if 'TIME' in verb_pred_list:
+            time_expression = verb_expression.args[2]
+            if len(time_expression.args) == 1:
+                #TIME(t)
+                time = str(time_expression.args[0])
+            else:
+                #TIME(t,HOUR) (ex: TIME(t1,1600HR))
+                time = str(time_expression.args[1])
+                
+            #ARRIVE or DEPART?
             
-        #ARRIVE or DEPART?
-        
-    if 'ARRIVE1' in verb_pred_list:
-        #ARRIVE1(v,f,t)
-        arrival_time = time if time not in gap else gap
-    else:
-        #DEPART1(v,f,t)
-        departure_time = time if time not in gap else gap
+        if 'ARRIVE1' in verb_pred_list:
+            #ARRIVE1(v,f,t)
+            arrival_time = time if time not in gap else gap
+        elif 'DEPART1' in verb_pred_list:
+            #DEPART1(v,f,t)
+            departure_time = time if time not in gap else gap
+        else:
+            #RUN-TIME
+            pass
+    except:
+        pass
     
     #--------Fill with parsed values-----------------#
     bus = "(BUS {})".format(f)
     arrival = "(ATIME {} {} {})".format(f, arrival_location, arrival_time)
     departure = "(DTIME {} {} {})".format(f, departure_location, departure_time)
+    runtime = "(RUNTIME {} {} {})".format(f, departure_location, arrival_location)
     proceduce = "(PRINT-ALL {}{}{}{})".format(gap, bus, arrival, departure)
     
     return {'query': gap,

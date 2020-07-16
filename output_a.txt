@@ -1,4 +1,4 @@
-Grammar with 83 productions (start state = S[])
+Grammar with 87 productions (start state = S[])
     S[GAP=?f, SEM=<WHQUERY(?vp(?v,?f),?np,?whq(?f))>, VAR=?v] -> WHICH-QUERY[SEM=?whq] BUS-NP[SEM=?np, VAR=?f] BUS-VP[SEM=?vp, VAR=?v]
     S[GAP='t1', SEM=<WHQUERY(?vp(?v,?f,t1),?np,?whq(t1))>, VAR=?v] -> TIME-QUERY[SEM=?whq] BUS-NP[SEM=?np, VAR=?f] BUS-VP[SEM=?vp, VAR=?v]
     BUS-NP[SEM=<?det(?cnp)>, VAR=?v] -> DET[SEM=?det] BUS-CNP[SEM=?cnp, VAR=?v]
@@ -10,6 +10,9 @@ Grammar with 83 productions (start state = S[])
     BUS-TIME[SEM=<TIME(?v,?time)>, VAR=?v] -> P-TIME[SEM=?p] TIME-MOD[SEM=?time, VAR=?v]
     BUS-VP[SEM=<\r f t.?v(r,f,TIME(t))>, VAR=?r] -> BUS-V[SEM=?v, VAR=?r]
     BUS-VP[SEM=<\r f.?v(r,f,?time)>, VAR=?r] -> BUS-V[SEM=?v, VAR=?r] BUS-TIME[SEM=?time]
+    BUS-VP[SEM=<?cvp>, VAR=?v] -> BUS-CVP[SEM=?cvp, VAR=?v]
+    BUS-CVP[SEM=<(?v(?n) & ?dest(?v))>, VAR=?n] -> BUS-V[SEM=?v, VAR=?n] BUS-DEST[SEM=?dest]
+    BUS-CVP[SEM=<(?v(?n) & ?source(?v))>, VAR=?n] -> BUS-V[SEM=?v, VAR=?n] BUS-SOURCE[SEM=?source]
     BUS-V[SEM=<\r f t.?v(r,f,t)>, VAR=?r] -> ARRIVE-V[SEM=?v, VAR=?r]
     BUS-V[SEM=<\r f t.?v(r,f,t)>, VAR=?r] -> DEPARTURE-V[SEM=?v, VAR=?r]
     ARRIVE-V[SEM=<\r f t.ARRIVE1(r,f,t)>, VAR=<a1>] -> 'arrives'
@@ -21,6 +24,7 @@ Grammar with 83 productions (start state = S[])
     BUS-SOURCE[SEM=<(\f.SOURCE(f)(?y))(?x)>, VAR=?y] -> 'from' CITY-NP[SEM=?x, VAR=?y]
     BUS-DEST[SEM=<\f.DEST(f,?x)>, VAR=?y] -> 'to' CITY-NP[SEM=?x, VAR=?y]
     BUS-DEST[SEM=<\f.DEST(f,?x)>, VAR=?y] -> 'for' CITY-NP[SEM=?x, VAR=?y]
+    BUS-DEST[SEM=<\f.DEST(f,?x)>, VAR=?y] -> 'in' CITY-NP[SEM=?x, VAR=?y]
     TIME-QUERY[SEM=<\x.WH(x,WHAT1)>] -> 'What' 'time' 'does'
     TIME-QUERY[SEM=<\x.WH(x,WHEN1)>] -> 'When' 'does'
     WHICH-QUERY[SEM=<\x.WH(x,WHICH1)>] -> 'Which'
@@ -30,9 +34,9 @@ Grammar with 83 productions (start state = S[])
     P-TIME[SEM=<AT>] -> 'at'
     P-TIME[SEM=<ON>] -> 'on'
     P-TIME[SEM=<IN>] -> 'in'
-    CITY-NAME[SEM=<'HoChiMinh'>, VAR=<h1>] -> 'Hồ' 'Chí' 'Minh'
-    CITY-NAME[SEM=<'Hue'>, VAR=<h2>] -> 'Huế'
-    CITY-NAME[SEM=<'DaNang'>, VAR=<h2>] -> 'Đà' 'Nẵng'
+    CITY-NAME[SEM=<'HCMC'>, VAR=<h1>] -> 'Hồ' 'Chí' 'Minh'
+    CITY-NAME[SEM=<'HUE'>, VAR=<h2>] -> 'Huế'
+    CITY-NAME[SEM=<'DANANG'>, VAR=<h2>] -> 'Đà' 'Nẵng'
     CITY-N[SEM=<CITY>, VAR=<c1>] -> 'city'
     TIME-MOD[SEM=<0:00HR>, VAR=<t1>] -> '0:00HR'
     TIME-MOD[SEM=<0:30HR>, VAR=<t1>] -> '0:30HR'

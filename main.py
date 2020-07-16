@@ -60,8 +60,31 @@ if __name__ == '__main__':
     
     parser.add_argument(
       '--question',
-      default= "Which bus to Huế city arrives at 22:00HR ?",
-      help= "Question to be parsed. Default = 'Which flight to Huế city arrives at 20:00HR ?'"
+      default= "When does the buses to Huế city arrive?",
+      help= "See All the question to be parsed."
+      # DẠNG 1 Xe bus nào đến thành phố Huế lúc 20:00HR ?
+      # 'Which bus to Huế city arrives at 20:00HR ?'
+      # 'Which bus to Huế city arrives at 22:30HR ?'
+      # 'Which bus to Hồ Chí Minh city arrives at 5:00HR ?'
+      # 'Which bus to Hồ Chí Minh city arrives at 5:30HR ?'
+      # 'Which bus to Hồ Chí Minh city arrives at 20:30HR ?'
+      # 'Which bus to Đà Nẵng city arrives at 13:30HR ?'
+      # 'Which bus to Đà Nẵng city arrives at 9:30HR ?'
+
+      # DẠNG 2 Thời gian xe bus B3 từ Đà Nẵng đến Huế ?
+      # How long does the bus B3 depart from Đà Nẵng arrive in Huế ? //Xe buýt B3 khởi hành từ Đà Nẵng mất bao lâu để đến Huế?
+
+      # DẠNG 3 Xe bus nào đến thành phố Hồ Chí Minh ? Những xe bus nào đi đến Huế ?
+      # Which bus arrive in Hồ Chí Minh city?
+      # Which bus arrive in Đà Nẵng city?
+      # Which buses arrive in Huế city?
+
+      # DẠNG 4 Những xe nào xuất phát từ thành phố Hồ Chí Minh ?
+      # Which buses depart from Hồ Chí Minh city?
+      # Which buses depart from Huế city?
+      # Which buses depart from Đà Nẵng city?
+      #BONUS Which bus from Hồ Chí Minh city depart at 12:30HR?
+
       )
     
     parser.add_argument(

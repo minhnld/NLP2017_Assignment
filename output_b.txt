@@ -1,17 +1,15 @@
-(S[GAP=<f2>, SEM=<WHQUERY(ARRIVE1(a3,f2,TIME(t2,22:00HR)),(BUS1(f2) & DEST(f2,NAME(h3,'Hue'))),WH(f2,WHICH1))>, VAR=<a3>]
-  (WHICH-QUERY[SEM=<\x.WH(x,WHICH1)>] Which)
-  (BUS-NP[SEM=<(BUS1(f3) & DEST(f3,NAME(h2,'Hue')))>, VAR=<f3>]
-    (BUS-CNP[SEM=<(BUS1(f2) & DEST(f2,NAME(h3,'Hue')))>, VAR=<f2>]
+(S[GAP='t1', SEM=<WHQUERY(ARRIVE1(a2,f2,TIME(t1)),THE((BUS1(f2) & DEST(f2,NAME(h3,'HUE')))),WH(t1,WHEN1))>, VAR=<a2>]
+  (TIME-QUERY[SEM=<\x.WH(x,WHEN1)>] When does)
+  (BUS-NP[SEM=<THE((BUS1(f3) & DEST(f3,NAME(h2,'HUE'))))>, VAR=<f3>]
+    (DET[SEM=<THE>] the)
+    (BUS-CNP[SEM=<(BUS1(f2) & DEST(f2,NAME(h3,'HUE')))>, VAR=<f2>]
       (BUS-CNP[SEM=<BUS1(f2)>, VAR=<f2>]
-        (BUS-N[SEM=<BUS1>, VAR=<f1>] bus))
-      (BUS-DEST[SEM=<\f.DEST(f,NAME(h2,'Hue'))>, VAR=<h2>]
+        (BUS-N[SEM=<BUS1>, VAR=<f1>] buses))
+      (BUS-DEST[SEM=<\f.DEST(f,NAME(h2,'HUE'))>, VAR=<h2>]
         to
-        (CITY-NP[SEM=<NAME(h3,'Hue')>, VAR=<h3>]
-          (CITY-NAME[SEM=<'Hue'>, VAR=<h2>] Huế)
+        (CITY-NP[SEM=<NAME(h3,'HUE')>, VAR=<h3>]
+          (CITY-NAME[SEM=<'HUE'>, VAR=<h2>] Huế)
           (CITY-N[SEM=<CITY>, VAR=<c1>] city)))))
-  (BUS-VP[SEM=<\r f.ARRIVE1(r,f,TIME(t3,22:00HR))>, VAR=<a2>]
+  (BUS-VP[SEM=<\r f t.ARRIVE1(r,f,TIME(t))>, VAR=<a3>]
     (BUS-V[SEM=<\r f t.ARRIVE1(r,f,t)>, VAR=<a2>]
-      (ARRIVE-V[SEM=<\r f t.ARRIVE1(r,f,t)>, VAR=<a1>] arrives))
-    (BUS-TIME[SEM=<TIME(t2,22:00HR)>, VAR=<t2>]
-      (P-TIME[SEM=<AT>] at)
-      (TIME-MOD[SEM=<22:00HR>, VAR=<t1>] 22:00HR))))
+      (ARRIVE-V[SEM=<\r f t.ARRIVE1(r,f,t)>, VAR=<a1>] arrive))))
