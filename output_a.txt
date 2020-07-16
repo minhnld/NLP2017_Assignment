@@ -1,37 +1,38 @@
-Grammar with 82 productions (start state = S[])
-    S[GAP=?f, SEM=<WHQUERY(?vp(?v,?f),?np,?whq(?f))>, VAR=?v] -> WHICH-QUERY[SEM=?whq] FLIGHT-NP[SEM=?np, VAR=?f] FLIGHT-VP[SEM=?vp, VAR=?v]
-    S[GAP='t1', SEM=<WHQUERY(?vp(?v,?f,t1),?np,?whq(t1))>, VAR=?v] -> TIME-QUERY[SEM=?whq] FLIGHT-NP[SEM=?np, VAR=?f] FLIGHT-VP[SEM=?vp, VAR=?v]
-    FLIGHT-NP[SEM=<?det(?cnp)>, VAR=?v] -> DET[SEM=?det] FLIGHT-CNP[SEM=?cnp, VAR=?v]
-    FLIGHT-NP[SEM=?cnp, VAR=?v] -> FLIGHT-CNP[SEM=?cnp, VAR=?v]
-    FLIGHT-CNP[SEM=<(?cnp & ?dest(?v))>, VAR=?v] -> FLIGHT-CNP[SEM=?cnp, VAR=?v] FLIGHT-DEST[SEM=?dest]
-    FLIGHT-CNP[SEM=<(?cnp & ?source(?v))>, VAR=?v] -> FLIGHT-CNP[SEM=?cnp, VAR=?v] FLIGHT-SOURCE[SEM=?source]
-    FLIGHT-CNP[SEM=<?n(?v)>, VAR=?v] -> FLIGHT-N[SEM=?n, VAR=?v]
-    FLIGHT-TIME[SEM=<TIME(?v,?time)>, VAR=?v] -> TIME-MOD[SEM=?time, VAR=?v]
-    FLIGHT-TIME[SEM=<TIME(?v,?time)>, VAR=?v] -> P-TIME[SEM=?p] TIME-MOD[SEM=?time, VAR=?v]
-    FLIGHT-VP[SEM=<\r f t.?v(r,f,TIME(t))>, VAR=?r] -> FLIGHT-V[SEM=?v, VAR=?r]
-    FLIGHT-VP[SEM=<\r f.?v(r,f,?time)>, VAR=?r] -> FLIGHT-V[SEM=?v, VAR=?r] FLIGHT-TIME[SEM=?time]
-    FLIGHT-V[SEM=<\r f t.?v(r,f,t)>, VAR=?r] -> ARRIVE-V[SEM=?v, VAR=?r]
-    FLIGHT-V[SEM=<\r f t.?v(r,f,t)>, VAR=?r] -> DEPARTURE-V[SEM=?v, VAR=?r]
+Grammar with 83 productions (start state = S[])
+    S[GAP=?f, SEM=<WHQUERY(?vp(?v,?f),?np,?whq(?f))>, VAR=?v] -> WHICH-QUERY[SEM=?whq] BUS-NP[SEM=?np, VAR=?f] BUS-VP[SEM=?vp, VAR=?v]
+    S[GAP='t1', SEM=<WHQUERY(?vp(?v,?f,t1),?np,?whq(t1))>, VAR=?v] -> TIME-QUERY[SEM=?whq] BUS-NP[SEM=?np, VAR=?f] BUS-VP[SEM=?vp, VAR=?v]
+    BUS-NP[SEM=<?det(?cnp)>, VAR=?v] -> DET[SEM=?det] BUS-CNP[SEM=?cnp, VAR=?v]
+    BUS-NP[SEM=?cnp, VAR=?v] -> BUS-CNP[SEM=?cnp, VAR=?v]
+    BUS-CNP[SEM=<(?cnp & ?dest(?v))>, VAR=?v] -> BUS-CNP[SEM=?cnp, VAR=?v] BUS-DEST[SEM=?dest]
+    BUS-CNP[SEM=<(?cnp & ?source(?v))>, VAR=?v] -> BUS-CNP[SEM=?cnp, VAR=?v] BUS-SOURCE[SEM=?source]
+    BUS-CNP[SEM=<?n(?v)>, VAR=?v] -> BUS-N[SEM=?n, VAR=?v]
+    BUS-TIME[SEM=<TIME(?v,?time)>, VAR=?v] -> TIME-MOD[SEM=?time, VAR=?v]
+    BUS-TIME[SEM=<TIME(?v,?time)>, VAR=?v] -> P-TIME[SEM=?p] TIME-MOD[SEM=?time, VAR=?v]
+    BUS-VP[SEM=<\r f t.?v(r,f,TIME(t))>, VAR=?r] -> BUS-V[SEM=?v, VAR=?r]
+    BUS-VP[SEM=<\r f.?v(r,f,?time)>, VAR=?r] -> BUS-V[SEM=?v, VAR=?r] BUS-TIME[SEM=?time]
+    BUS-V[SEM=<\r f t.?v(r,f,t)>, VAR=?r] -> ARRIVE-V[SEM=?v, VAR=?r]
+    BUS-V[SEM=<\r f t.?v(r,f,t)>, VAR=?r] -> DEPARTURE-V[SEM=?v, VAR=?r]
     ARRIVE-V[SEM=<\r f t.ARRIVE1(r,f,t)>, VAR=<a1>] -> 'arrives'
     ARRIVE-V[SEM=<\r f t.ARRIVE1(r,f,t)>, VAR=<a1>] -> 'arrive'
     DEPARTURE-V[SEM=<\r f t.DEPART1(r,f,t)>, VAR=<d1>] -> 'departs'
     DEPARTURE-V[SEM=<\r f t.DEPART1(r,f,t)>, VAR=<d1>] -> 'depart'
     CITY-NP[SEM=<NAME(?v,?x)>, VAR=?v] -> CITY-NAME[SEM=?x, VAR=?v] CITY-N[SEM=?n]
     CITY-NP[SEM=<DET(?x)>, VAR=?v] -> DET[SEM=?det] CITY-N[SEM=?x, VAR=?v]
-    FLIGHT-SOURCE[SEM=<(\f.SOURCE(f)(?y))(?x)>, VAR=?y] -> 'from' CITY-NP[SEM=?x, VAR=?y]
-    FLIGHT-DEST[SEM=<\f.DEST(f,?x)>, VAR=?y] -> 'to' CITY-NP[SEM=?x, VAR=?y]
-    FLIGHT-DEST[SEM=<\f.DEST(f,?x)>, VAR=?y] -> 'for' CITY-NP[SEM=?x, VAR=?y]
+    BUS-SOURCE[SEM=<(\f.SOURCE(f)(?y))(?x)>, VAR=?y] -> 'from' CITY-NP[SEM=?x, VAR=?y]
+    BUS-DEST[SEM=<\f.DEST(f,?x)>, VAR=?y] -> 'to' CITY-NP[SEM=?x, VAR=?y]
+    BUS-DEST[SEM=<\f.DEST(f,?x)>, VAR=?y] -> 'for' CITY-NP[SEM=?x, VAR=?y]
     TIME-QUERY[SEM=<\x.WH(x,WHAT1)>] -> 'What' 'time' 'does'
     TIME-QUERY[SEM=<\x.WH(x,WHEN1)>] -> 'When' 'does'
     WHICH-QUERY[SEM=<\x.WH(x,WHICH1)>] -> 'Which'
     DET[SEM=<THE>] -> 'the'
-    FLIGHT-N[SEM=<FLIGHT1>, VAR=<f1>] -> 'flight'
-    FLIGHT-N[SEM=<FLIGHT1>, VAR=<f1>] -> 'flights'
+    BUS-N[SEM=<BUS1>, VAR=<f1>] -> 'bus'
+    BUS-N[SEM=<BUS1>, VAR=<f1>] -> 'buses'
     P-TIME[SEM=<AT>] -> 'at'
     P-TIME[SEM=<ON>] -> 'on'
     P-TIME[SEM=<IN>] -> 'in'
     CITY-NAME[SEM=<'HoChiMinh'>, VAR=<h1>] -> 'Hồ' 'Chí' 'Minh'
     CITY-NAME[SEM=<'Hue'>, VAR=<h2>] -> 'Huế'
+    CITY-NAME[SEM=<'DaNang'>, VAR=<h2>] -> 'Đà' 'Nẵng'
     CITY-N[SEM=<CITY>, VAR=<c1>] -> 'city'
     TIME-MOD[SEM=<0:00HR>, VAR=<t1>] -> '0:00HR'
     TIME-MOD[SEM=<0:30HR>, VAR=<t1>] -> '0:30HR'

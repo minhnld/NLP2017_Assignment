@@ -1,9 +1,3 @@
-"""
-© 2017 Hoàng Lê Hải Thanh (Thanh Hoang Le Hai) aka GhostBB
-If there are any problems, contact me at mail@hoanglehaithanh.com or 1413492@hcmut.edu.vn 
-This project is under [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0) (Inherit from NLTK)
-"""
-
 def parse_to_procedure(logical_tree):
     """
     Parse logical tree to procedure semantics
@@ -18,22 +12,22 @@ def parse_to_procedure(logical_tree):
     departure_location = '?sd'
     departure_time = '?td'
     
-    #[<ApplicationExpression ARRIVE1(a3,f2,TIME(t2,20:00HR))>, <AndExpression (FLIGHT1(f2) & DEST(f2,NAME(h3,'Hue')))>, <ApplicationExpression WH(f2,WHICH1)>]
-    verb_expression, flight_expression, wh_expression = logical_expression.args
+    #[<ApplicationExpression ARRIVE1(a3,f2,TIME(t2,20:00HR))>, <AndExpression (bus1(f2) & DEST(f2,NAME(h3,'Hue')))>, <ApplicationExpression WH(f2,WHICH1)>]
+    verb_expression, bus_expression, wh_expression = logical_expression.args
     gap = '?' + str(logical_tree.label()['GAP'])
     
-    #---------Check Flight Expression------------#
-    np_variables = flight_expression.variables()
-    np_preds = [pred.name for pred in flight_expression.predicates()]
+    #---------Check bus Expression------------#
+    np_variables = bus_expression.variables()
+    np_preds = [pred.name for pred in bus_expression.predicates()]
     
     if 'DEST' in np_preds:
         #DEST(f (NAME(a,B)))
-        arrival_location = 'HUE' if list(flight_expression.constants())[0].name == "'Hue'" else 'HCMC'
+        arrival_location = list(bus_expression.constants())[0].name
     else:
         #SOURCE(f, NAME(a,B))
-        departure_location = 'HUE' if list(flight_expression.constants())[0].name == "'Hue'" else 'HCMC'
+        departure_location = list(bus_expression.constants())[0].name
         
-    #Get flight variable (f1 or f2 or ...)
+    #Get bus variable (f1 or f2 or ...)
     f = '?'+ [variable.name for variable in np_variables if 'f' in variable.name][0]
     
     #-------------Check Verb expression-------------#
@@ -60,13 +54,13 @@ def parse_to_procedure(logical_tree):
         departure_time = time if time not in gap else gap
     
     #--------Fill with parsed values-----------------#
-    flight = "(FLIGHT {})".format(f)
+    bus = "(BUS {})".format(f)
     arrival = "(ATIME {} {} {})".format(f, arrival_location, arrival_time)
     departure = "(DTIME {} {} {})".format(f, departure_location, departure_time)
-    proceduce = "(PRINT-ALL {}{}{}{})".format(gap, flight, arrival, departure)
+    proceduce = "(PRINT-ALL {}{}{}{})".format(gap, bus, arrival, departure)
     
     return {'query': gap,
-            'flight': f,
+            'bus': f,
             'arrival_location': arrival_location,
             'arrival_time': arrival_time,
             'departure_location': departure_location,

@@ -60,7 +60,7 @@ if __name__ == '__main__':
     
     parser.add_argument(
       '--question',
-      default= "When does the flights to Huế city arrive?",
+      default= "Which bus to Huế city arrives at 22:00HR ?",
       help= "Question to be parsed. Default = 'Which flight to Huế city arrives at 20:00HR ?'"
       )
     
