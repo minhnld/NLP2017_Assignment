@@ -1,1 +1,1 @@
-(PRINT-ALL ?t1(BUS ?f2)(ATIME ?f2 HUE ?t1)(DTIME ?f2 ?sd ?td))
+(PRINT-ALL ?f3(BUS ?f3)(ATIME ?f3 ?sa ?ta)(DTIME ?f3 HCMC 12:30HR))

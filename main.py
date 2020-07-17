@@ -60,7 +60,7 @@ if __name__ == '__main__':
     
     parser.add_argument(
       '--question',
-      default= "When does the buses to Huế city arrive?",
+      default= "Which bus from Hồ Chí Minh city depart at 12:30HR?",
       help= "See All the question to be parsed."
       # DẠNG 1 Xe bus nào đến thành phố Huế lúc 20:00HR ?
       # 'Which bus to Huế city arrives at 20:00HR ?'

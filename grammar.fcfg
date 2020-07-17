@@ -7,16 +7,18 @@ BUS-NP[SEM=?cnp, VAR=?v] -> BUS-CNP[SEM=?cnp, VAR=?v]
 
 BUS-CNP[SEM=<?cnp & ?dest(?v)>, VAR=?v] -> BUS-CNP[SEM=?cnp,VAR=?v] BUS-DEST[SEM=?dest]
 BUS-CNP[SEM=<?cnp & ?source(?v)>,VAR=?v]-> BUS-CNP[SEM=?cnp,VAR=?v] BUS-SOURCE[SEM=?source]
-BUS-CNP[SEM=<?n(?v)>, VAR=?v] -> BUS-N[SEM=?n, VAR=?v]
+BUS-CNP[SEM=<?cnp & ?x>, VAR=?k] ->BUS-CNP[SEM=?cnp,VAR=?v] BUS-NAME-NP[SEM=?x,VAR=?k]  
 BUS-CNP[SEM=<?n(?v)>, VAR=?v] -> BUS-N[SEM=?n, VAR=?v]
 
 BUS-TIME[SEM=<TIME(?v,?time)>, VAR=?v] -> TIME-MOD[SEM=?time, VAR=?v] | P-TIME[SEM=?p] TIME-MOD[SEM=?time, VAR=?v]
 
 BUS-VP[SEM=<\r f t.?v(r,f,TIME(t))>, VAR=?r] -> BUS-V[SEM=?v, VAR=?r]
 BUS-VP[SEM=<\r f.?v(r,f,?time)>, VAR=?r] -> BUS-V[SEM=?v, VAR=?r] BUS-TIME[SEM=?time]
-BUS-VP[SEM=<?cvp>, VAR=?v] -> BUS-CVP[SEM=?cvp,VAR=?v] 
+BUS-VP[SEM=<?cvp>, VAR=?v] -> BUS-CVP[SEM=?cvp,VAR=?v]
+
 BUS-CVP[SEM=<?v(?n) & ?dest(?v)>, VAR=?n] -> BUS-V[SEM=?v, VAR=?n] BUS-DEST[SEM=?dest]
 BUS-CVP[SEM=<?v(?n) & ?source(?v)>, VAR=?n] -> BUS-V[SEM=?v, VAR=?n] BUS-SOURCE[SEM=?source]
+BUS-CVP[SEM=<?v(?n) & ?source(?v) & ?q(?w) & ?dest(?q)>, VAR=?n] -> BUS-V[SEM=?v, VAR=?n] BUS-SOURCE[SEM=?source] BUS-V[SEM=?q, VAR=?w] BUS-DEST[SEM=?dest]
 
 BUS-V[SEM=<\r f t.?v(r,f,t)>, VAR=?r] -> ARRIVE-V[SEM=?v, VAR=?r] | DEPARTURE-V[SEM=?v, VAR=?r]
 
@@ -25,8 +27,8 @@ ARRIVE-V[SEM=<\r f t.ARRIVE1(r,f,t)>, VAR=<a1>] -> 'arrives'| 'arrive'
 DEPARTURE-V[SEM=<\r f t.DEPART1(r,f,t)>, VAR=<d1>] -> 'departs' | 'depart'
 
 CITY-NP[SEM=<NAME(?v,?x)>,VAR=?v] -> CITY-NAME[SEM=?x,VAR=?v] CITY-N[SEM=?n]
-
 CITY-NP[SEM=<DET(?x)>,VAR=?v] -> DET[SEM=?det]  CITY-N[SEM=?x, VAR=?v]
+BUS-NAME-NP[SEM=<BUSNAME(?v,?x)>,VAR=?v] -> BUS-NAME[SEM=?x,VAR=?v] 
 
 BUS-SOURCE[SEM=<\f.SOURCE(f) (?y,?x)>,VAR=?y] -> 'from' CITY-NP[SEM=?x, VAR=?y]
 
@@ -37,7 +39,7 @@ BUS-DEST[SEM=<\f.DEST(f,?x)>,VAR=?y] -> 'in' CITY-NP[SEM=?x,VAR=?y]
 TIME-QUERY[SEM=<\x.WH(x,WHAT1)>] -> 'What' 'time' 'does' 
 TIME-QUERY[SEM=<\x.WH(x,WHEN1)>] -> 'When' 'does'
 WHICH-QUERY[SEM=<\x.WH(x,WHICH1)>] -> 'Which'
-TIME-QUERY[SEM=<\x.WH(x,HOWLONG1)>] -> 'How' 'long' 'does'
+TIME-QUERY[SEM=<\x.WH(x,WHICH2)>] -> 'How' 'long' 'does'
 
 DET[SEM=<THE>] -> 'the'
 
@@ -49,7 +51,14 @@ P-TIME[SEM=<IN>] -> 'in'
 
 CITY-NAME[SEM=<'HCMC'>,VAR=<h1>] -> 'Hồ' 'Chí' 'Minh'
 CITY-NAME[SEM=<'HUE'>,VAR=<h2>] -> 'Huế'
-CITY-NAME[SEM=<'DANANG'>,VAR=<h2>] -> 'Đà' 'Nẵng'
+CITY-NAME[SEM=<'DANANG'>,VAR=<h3>] -> 'Đà' 'Nẵng'
+BUS-NAME[SEM=<'BUSNAME1'>,VAR=<h4>] -> 'B1'
+BUS-NAME[SEM=<'BUSNAME2'>,VAR=<h5>] -> 'B2'
+BUS-NAME[SEM=<'BUSNAME3'>,VAR=<h6>] -> 'B3'
+BUS-NAME[SEM=<'BUSNAME4'>,VAR=<h7>] -> 'B4'
+BUS-NAME[SEM=<'BUSNAME5'>,VAR=<h8>] -> 'B5'
+BUS-NAME[SEM=<'BUSNAME6'>,VAR=<h9>] -> 'B6'
+BUS-NAME[SEM=<'BUSNAME7'>,VAR=<h10>] -> 'B7'
 
 CITY-N[SEM=<CITY>,VAR=<c1>] -> 'city'
 
