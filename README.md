@@ -34,7 +34,8 @@ CITY-NAME → Hồ Chí Minh │ Huế
 
 ### 2. Prerequisites:
 - Python 3.5
-- [NLTK 3.2](http://www.nltk.org)
+- [NLTK 3.2](http://www.nltk.org) 
+
 
 ### 3. System structure
 There are 4 python files as 4 modules:
@@ -50,7 +51,7 @@ Some special cases:
   - WHQUERY has GAP
   - VP and some rules have lamda expression
  - [de.txt](de.txt) : The file that contains the question that I completed. Don't care about it.
- - 1413492.zip : The zip file contains submited project. 
+ - 1712177.zip : The zip file contains submited project. 
  - [README.md](README.md) : This file, obiviously :)
 
 ### 4. Installation
@@ -61,13 +62,45 @@ $python3 main.py
 ```
 Use custom arguments: 
 ```sh
-$python3 main.py --question [question] --rule_file_name [rule_file_name]
+$python3 main.py --question [question] --rule_file_name [rule_file_name] --language ['english','vietnamese'] --visualize ['on','off']
 ```
 Usage:
-- ```--question``` : The input question in English. Default: "*Which flight to Huế city arrives at 20:00HR ?*"
+- ```--question``` : The input question in English or Vietnamese. Default: "*Which flight to Huế city arrives at 20:00HR ?*"
 -  ```--rule_file_name``` : The context free grammar file (.fcfg). Default: *grammar.fcfg*
+- ``` --language ``` : english or vietnamese, (the default option is Vietnamese)
+- ``` --visualize ``` : Visualize the SpaCy dependency tree with nltk.tree, you can choose to turn on or off this feature by pass this to command line --visualize 'on' (or 'off')  (the default option is "Off" )
+#### Important note !!!
+You might unable to run the program when input vietnamese text into the command line, and the debug console show something like this :
+```
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-3: character maps to <undefined>
+```
+that because the command windows doesn't speak Vietnamese yet (at this time for sure, lmao). In order to fix that, you might want to try this command:
+```sh
+chcp 65001
+```
+also if it doesn't work try to set the config of your local machine's python to encoding='utf-8' it will also help to.
 
 If the grammar rules is correct and the question can be parsed, all the results of 5 phases (*1.create parser, 2.create parsed tree, 3.create logical form, 4.create procedure semantics form, 5.query result*) will be printed as well as written to files.
+
+#### Dependency grammar Installation:
+1. Install spaCy
+```bash 
+pip install spacy==2.2.3
+```
+2. Install pyvi
+```bash
+pip install pyvi
+```
+3. Download vivi model directly using pip:
+```bash 
+pip install https://github.com/trungtv/vi_spacy/raw/master/packages/vi_spacy_model-0.2.1/dist/vi_spacy_model-0.2.1.tar.gz
+```
+4. Run this command or manually copy the vivi model package that you has just downloaded in step 3 into ... folder.
+```bash 
+python -m spacy link vi_spacy_model vi_spacy_model
+```
+
+For more infomation please refer to https://spacy.io/usage documentation
 
 ### 5. Result
 ##### Database:
@@ -81,6 +114,68 @@ These information are given from the assignment's description:
 | FLIGHT F4 | ATIME F4 HCMC 10:00HR | DTIME F4 HUE 8:30HR   |
 
 ##### Result of the assignment (default parameters):
+Question:
+```
+Thời gian xe bus B3 từ Đà Nẵng đến Huế ?
+```
+Parsed tree (style: python list format) (in [output_b.txt](output_b.txt)) look something like this : 
+```
+[Tree('đến_V_ROOT', ['Thời_gian_N_dep', Tree('xe_N_nsubj', ['bus_V_xcomp', 'B3_Ny_compound', Tree('Đà_Nẵng_Np_nmod', ['từ_E_case'])]), 'Huế_Np_obj', '?_?_punct'])]
+Token def.
+a. token.text, b. token.lemma_, c. token.pos_, d. token.tag_, e. token.dep_, f.token.shape_, g. token.is_alpha, h. token.is_stop
+0. a.Thời_gian, b.Thời_gian, c.X, d.N, e.dep, f.xxxxxxxxx, g.False, h.True
+1. a.xe, b.xe, c.X, d.N, e.nsubj, f.xx, g.True, h.False
+2. a.bus, b.bus, c.X, d.V, e.xcomp, f.xxx, g.True, h.False
+3. a.B3, b.B3, c.X, d.Ny, e.compound, f.xx, g.False, h.False
+4. a.từ, b.từ, c.X, d.E, e.case, f.xx, g.True, h.True
+5. a.Đà_Nẵng, b.Đà_Nẵng, c.X, d.Np, e.nmod, f.xxxxxxx, g.False, h.False
+6. a.đến, b.đến, c.X, d.V, e.ROOT, f.xxx, g.True, h.True
+7. a.Huế, b.Huế, c.X, d.Np, e.obj, f.xxx, g.True, h.False
+8. a.?, b.?, c.X, d.?, e.punct, f.?, g.False, h.False
+```
+Console output
+```
+Token def.
+a. token.text, b. token.lemma_, c. token.pos_, d. token.tag_, e. token.dep_, f.token.shape_, g. token.is_alpha, h. token.is_stop
+0. b.Thời_gian, b.Thời_gian, c.X, d.N, e.dep, f.xxxxxxxxx, g.False, h.True
+1. b.xe, b.xe, c.X, d.N, e.nsubj, f.xx, g.True, h.False
+2. b.bus, b.bus, c.X, d.V, e.xcomp, f.xxx, g.True, h.False
+3. b.B3, b.B3, c.X, d.Ny, e.compound, f.xx, g.False, h.False
+4. b.từ, b.từ, c.X, d.E, e.case, f.xx, g.True, h.True
+5. b.Đà_Nẵng, b.Đà_Nẵng, c.X, d.Np, e.nmod, f.xxxxxxx, g.False, h.False
+6. b.đến, b.đến, c.X, d.V, e.ROOT, f.xxx, g.True, h.True
+7. b.Huế, b.Huế, c.X, d.Np, e.obj, f.xxx, g.True, h.False
+8. b.?, b.?, c.X, d.?, e.punct, f.?, g.False, h.False
+
+NLTK spaCy Parse Tree
+                           đến_V_ROOT
+        _______________________|________________________
+       |            |          |                    xe_N_nsubj
+       |            |          |            ____________|_______________
+       |            |          |           |            |        Đà_Nẵng_Np_nmod
+       |            |          |           |            |               |
+Thời_gian_N_dep Huế_Np_obj ?_?_punct  bus_V_xcomp B3_Ny_compound    từ_E_case
+
+```
+If you choose the --visualize 'on' parameter, the output will draw this tree:
+![Result](images/DGTree_ex2.png)
+
+Parsed logical form (in [output_c.txt](output_c.txt))
+```
+blank
+```
+
+Parsed procedure semantics form (in [output_d.txt](output_d.txt))
+```
+blank
+```
+
+Result (in [output_e.txt](output_e.txt))
+```
+blank
+```
+
+##### Result of the assignment (when the language parameter was the string 'english'):
 Question:
 ```
 Which flight to Huế city arrives at 20:00HR ?
@@ -121,6 +216,7 @@ Result (in [output_e.txt](output_e.txt))
 F3
 ```
 ![Result](images/result.png)
+
 
 ##### Other test:
 ##### Test 1:

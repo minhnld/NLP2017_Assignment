@@ -16,7 +16,7 @@ raw_database = [
                     "(BUS B3)",
                     "(ATIME B3 HCMC 5:00HR)",
                     "(DTIME B3 DANANG 17:30HR)",
-                    "(RUN-TIME B3 DANANG HMC 14:00 HR)",
+                    "(RUN-TIME B3 DANANG HCMC 14:00 HR)",
                     "(BUS B4)",
                     "(ATIME B4 HCMC 5:30HR)",
                     "(DTIME B4 DANANG 17:30HR)",
@@ -76,7 +76,12 @@ def retrieve_result(semantics):
             result_type = arg
                  
     #Iterate after bus, ATIME and DTIME to have result
-    bus_check_result = [f.split()[1] for f in database['bus'] if procedure_semantics['bus'] in f]
+
+    bus_check_result=[]
+    if (procedure_semantics['busname']!=''):
+        bus_check_result=procedure_semantics['busname']
+    else:
+        bus_check_result = [f.split()[1] for f in database['bus'] if procedure_semantics['bus'] in f]
 
     arrival_bus_result = [a.split()[1] for a in database['arrival']
                             if procedure_semantics['arrival_location'] in a
@@ -101,5 +106,5 @@ def retrieve_result(semantics):
     elif result_type == 'departure_time':
         result = [d.split()[3] for d in database['departure'] if d.split()[1] in departure_bus_result]
     else:
-        result = [d.split()[4] for d in database['runtime'] if d.split()[1] in runtime_bus_result]
+        result = runtime_bus_result
     return result

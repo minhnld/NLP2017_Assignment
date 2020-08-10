@@ -11,6 +11,8 @@ def parse_to_procedure(logical_tree):
     arrival_time = '?ta'
     departure_location = '?sd'
     departure_time = '?td'
+    runtime='?r'
+    busname=''
     #[<ApplicationExpression ARRIVE1(a3,f2,TIME(t2,20:00HR))>, <AndExpression (bus1(f2) & DEST(f2,NAME(h3,'Hue')))>, <ApplicationExpression WH(f2,WHICH1)>]
     verb_expression, bus_expression, wh_expression = logical_expression.args
     gap = '?' + str(logical_tree.label()['GAP'])
@@ -27,10 +29,37 @@ def parse_to_procedure(logical_tree):
     try:
         if 'DEST' in np_preds:
             #DEST(f (NAME(a,B)))
-            arrival_location = list(bus_expression.constants())[0].name.replace("'","")
-        else:
+            if len(list(bus_expression.constants()))==1:
+                arrival_location = list(bus_expression.constants())[0].name.replace("'","")
+            else:
+                arrival_location = list(bus_expression.constants())[1].name.replace("'","")        
+        elif  'DEST' in verb_pred_list:
+            #DEST(f (NAME(a,B)))
+            if len(list(verb_expression.constants()))==1:
+                arrival_location = list(verb_expression.constants())[0].name.replace("'","")
+            else:
+                if 'ARRIVE1' in str(verb_expression.first):
+                    arrival_location = verb_expression.second.constants().pop().name.replace("'","")
+                else:
+                    arrival_location = verb_expression.second.constants().pop().name.replace("'","")
+
+        if 'BUSNAME' in np_preds:
+            busname=list(bus_expression.constants())[0].name.replace("'","")
+            runtime=gap
+
+        if 'SOURCE' in np_preds:
             #SOURCE(f, NAME(a,B))
             departure_location = list(bus_expression.constants())[0].name.replace("'","")
+        elif 'SOURCE' in verb_pred_list:
+            #SOURCE(f, NAME(a,B))
+            if len(list(verb_expression.constants()))==1:
+                departure_location = list(verb_expression.constants())[0].name.replace("'","")
+            else:
+                if 'DEPART1' in str(verb_expression.first):
+                    departure_location = verb_expression.first.constants().pop().name.replace("'","")
+                else:
+                    departure_location = verb_expression.second.constants().pop().name.replace("'","")
+
     except:
         if 'DEST' in verb_pred_list:
             #DEST(f (NAME(a,B)))
@@ -69,8 +98,8 @@ def parse_to_procedure(logical_tree):
     bus = "(BUS {})".format(f)
     arrival = "(ATIME {} {} {})".format(f, arrival_location, arrival_time)
     departure = "(DTIME {} {} {})".format(f, departure_location, departure_time)
-    runtime = "(RUNTIME {} {} {})".format(f, departure_location, arrival_location)
-    proceduce = "(PRINT-ALL {}{}{}{})".format(gap, bus, arrival, departure)
+    runtimeprint = "(RUNTIME {} {} {} {})".format(f,busname, departure_location, arrival_location)
+    proceduce = "(PRINT-ALL {}{}{}{}{})".format(gap, bus, arrival, departure,runtimeprint)
     
     return {'query': gap,
             'bus': f,
@@ -78,5 +107,7 @@ def parse_to_procedure(logical_tree):
             'arrival_time': arrival_time,
             'departure_location': departure_location,
             'departure_time': departure_time,
-            'str': proceduce}
+            'str': proceduce,
+            'busname':busname,
+            'runtime':runtime}
     
