@@ -1,14 +1,12 @@
-[Tree('lúc_N_ROOT', 
-    [Tree('Xe_bus_N_nsubj',
-        ['nào_P_det', 
-        Tree('thành_phố_N_nmod', ['đến_E_case', 'Huế_Np_compound'])]), 
-    '2000HR_M_xcomp'])]
+[Tree('đi_V_ROOT', [Tree('xe_N_nsubj', ['Những_L_det', 'nào_P_det']), Tree('Đà_nẵng_Np_obl', ['từ_E_case']), Tree('thành_phố_N_obl', ['đến_E_case', 'Hồ_Chí_Minh_Np_compound'])])]
 Token def.
 a. token.text, b. token.lemma_, c. token.pos_, d. token.tag_, e. token.dep_, f.token.shape_, g. token.is_alpha, h. token.is_stop
-0. a.Xe_bus, b.Xe_bus, c.X, d.N, e.nsubj, f.Xx_xxx, g.False, h.False
-1. a.nào, b.nào, c.X, d.P, e.det, f.xxx, g.True, h.True
-2. a.đến, b.đến, c.X, d.E, e.case, f.xxx, g.True, h.True
-3. a.thành_phố, b.thành_phố, c.X, d.N, e.nmod, f.xxxxxxxxx, g.False, h.False
-4. a.Huế, b.Huế, c.X, d.Np, e.compound, f.xxx, g.True, h.False
-5. a.lúc, b.lúc, c.X, d.N, e.ROOT, f.xxx, g.True, h.True
-6. a.2000HR, b.2000HR, c.X, d.M, e.xcomp, f.ddddXX, g.False, h.False
+0. a.Những, b.Những, c.X, d.L, e.det, f.xxxxx, g.True, h.True
+1. a.xe, b.xe, c.X, d.N, e.nsubj, f.xx, g.True, h.False
+2. a.nào, b.nào, c.X, d.P, e.det, f.xxx, g.True, h.True
+3. a.đi, b.đi, c.X, d.V, e.ROOT, f.xx, g.True, h.False
+4. a.từ, b.từ, c.X, d.E, e.case, f.xx, g.True, h.True
+5. a.Đà_nẵng, b.Đà_nẵng, c.X, d.Np, e.obl, f.Xx_xxxx, g.False, h.False
+6. a.đến, b.đến, c.X, d.E, e.case, f.xxx, g.True, h.True
+7. a.thành_phố, b.thành_phố, c.X, d.N, e.obl, f.xxxxxxxxx, g.False, h.False
+8. a.Hồ_Chí_Minh, b.Hồ_Chí_Minh, c.X, d.Np, e.compound, f.xxxxxxxxxxx, g.False, h.False

@@ -59,7 +59,7 @@ def main(args):
           write_file(5, " ".join(results))
     else:
       #Vietnamse Version
-            #Load grammar from .fcfg file
+      #Load grammar from .fcfg file
       # print("-------------Loading grammar---------------------")
       # nlp_grammar = parse.load_parser(args.rule_file_name, trace = 0)
       # print("Grammar loaded at {}".format(args.rule_file_name))
@@ -70,8 +70,8 @@ def main(args):
       #Get parse tree English
       print("-------------Parsed structure-------------")
       print(question)
-      #tree = nlp_grammar.parse_one(question.replace('?','').split())
-      tree,token_def=spacy_viet(question,visualize)
+      # tree = nlp_grammar.parse_one(question.replace('?','').split())
+      tree,token_def=spacy_viet(question.replace('?','').replace(':','').replace('.',''),visualize)
       write_file(2, str(tree) + "\n" +token_def)
 
   
@@ -108,7 +108,7 @@ if __name__ == '__main__':
     parser.add_argument(
       '--question',
       default= "How long does the bus B4 depart from Hồ Chí Minh city arrive in Đà Nẵng city ?",
-      help= "See All the question to be parsed."
+      help= "All the question to be parsed."
       # DẠNG 1 Xe bus nào đến thành phố Huế lúc 20:00HR ?
       # 'Which bus to Huế city arrives at 20:00HR ?'
       # 'Which bus to Huế city arrives at 22:30HR ?'
