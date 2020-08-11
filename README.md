@@ -101,7 +101,7 @@ python -m spacy link vi_spacy_model vi_spacy_model
 ```
 ##### spaCy doc
 For more infomation please refer to https://spacy.io/usage for documentation
-and https://spacy.io/api/annotation#pos-tagging (Syntactic Dependency Parsing/Universal Part-of-speech Tags) for tag definition.
+and https://spacy.io/api/annotation#pos-tagging (Syntactic Dependency Parsing/Universal Part-of-speech Tags) , https://universaldependencies.org/vi/dep/  for tag definition.
 ### 5. Result
 ##### Database:
 These information are given from the assignment's description:
