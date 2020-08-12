@@ -71,7 +71,9 @@ def main(args):
       print("-------------Parsed structure-------------")
       print(question)
       # tree = nlp_grammar.parse_one(question.replace('?','').split())
-      tree,token_def=spacy_viet(question.replace('?','').replace(':','').replace('.',''),visualize)
+      tree,token_def,doc=spacy_viet(question.replace('?','').replace(':','').replace('.',''),visualize)
+      from code_featstructures import mainLogic
+      mainLogic(doc)
       write_file(2, str(tree) + "\n" +token_def)
 
   
