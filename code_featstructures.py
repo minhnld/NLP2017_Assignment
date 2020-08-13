@@ -31,30 +31,74 @@ def subtree_matcher(doc,dep,text=''):
 def mainLogic(doc):
     destFlag=False
     arriveFlag=False
-    (f,typeWh)=('f2','WHICH1') if (subtree_matcher(doc,'det',text='nào') !='') else ('?r','HOWLONG1')
+    sourceVpFlag=False
+    destVpFlag=False
+
+    (f,typeWh)=('f2','WHICH1') if (subtree_matcher(doc,'det',text='nào') !='') else ('?f','HOWLONG1')
     if (typeWh=='WHICH1'):
         gap=f
     else:
+        #Runtime (HOWLONG1 case)
         gap='r2'
 
     if (gap=='f2'):
-        if subtree_matcher(doc,'case',text='đến'):
+        if subtree_matcher(doc,'case',text='đến')!='':
             arriveFlag=True
             a='a3'
             time=subtree_matcher(doc,'xcomp')
             if time!='':    
                 t='t2'
+            else:
+                t='?t'
         cityTokenText=['Hồ Chí Minh','Hà Nội','Huế']
         cityTokenDep=['compound','nmod','obl']
         for cT in cityTokenText:
             for cD in cityTokenDep:
                 temp=subtree_matcher(doc,cD,cT)
                 if temp !='':
-                    destFlag=True
-                    nameArrive= temp 
-    if arriveFlag:                
+                    destNpFlag=True
+                    nameArrive= temp
+                    break 
+    elif (gap=='r2'):
+        if (subtree_matcher(doc,'ROOT',text='đến'))!='':
+            arriveFlag=True
+            a='a3'
+
+            time=subtree_matcher(doc,'xcomp')
+            if time!='':    
+                t='t2'
+            else:
+                t='?t'
+                time='?time'
+
+            nameArrive=subtree_matcher(doc,'obj')
+            if nameArrive!='':    
+                h='h4'
+                destVpFlag=True
+            else:
+                h='?h'
+
+            if subtree_matcher(doc,'case',text='từ')!='':
+                d='d3'    
+                nameDepart=subtree_matcher(doc,'nmod')
+                if (nameDepart!=''):
+                    sourceVpFlag
+
+
+        
+        
+                    
+    if arriveFlag and not(destVpFlag) and not(sourceVpFlag):                
         vp=FeatStruct(arrive=FeatStruct(a=a,f=f,t=FeatStruct(t_var=t,time_var=time)))
-    if destFlag:
+    else:
+        vp=FeatStruct(
+            depart=FeatStruct(d=d,f=f,t=FeatStruct(t_var=t,time_var=time)),
+            source=FeatStruct(bus=Variable('?f'),source=FeatStruct(f=Variable('?f'),name=FeatStruct(h='h6',name=nameDepart)))
+            arrive=FeatStruct(a=a,f=f,t=FeatStruct(t_var=t,time_var=time))
+            dest=FeatStruct(bus=Variable('?f'),source=FeatStruct(f=Variable('?f'),name=FeatStruct(h='h4',name=nameArrive)))
+        )
+
+    if destNpFlag:
         np=FeatStruct(dest=FeatStruct(bus=Variable('?f'),dest=FeatStruct(f=Variable('?f'),name=FeatStruct(h='h3',name=nameArrive))))
     wh=FeatStruct(whType=FeatStruct(f=Variable('?f'),type=typeWh))
     sem=FeatStruct(query=FeatStruct(vp=vp,np=np,wh=wh))

@@ -1,1 +1,1 @@
-WHQUERY(ARRIVE1(a3 f2 TIME(t2 20:00HR)) (BUS1(f2) & DEST(f2 NAME(h3 'HUE'))) WH(f2 WHICH1))
+WHQUERY((\f t.DEPART1(d3 f t) & SOURCE(h6 NAME(h6 'HCMC') \r f t.DEPART1(r f t)) & \f t.ARRIVE1(a3 f t) & DEST(\r f t.ARRIVE1(r f t) NAME(h4 'HUE'))) THE((BUS1(f2) & BUSNAME(h3 'B1'))) WH(h3 HOWLONG1))

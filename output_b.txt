@@ -1,10 +1,30 @@
-[Tree('lúc_N_ROOT', [Tree('Xe_bus_N_nsubj', ['nào_P_det', Tree('thành_phố_N_nmod', ['đến_E_case', 'Huế_Np_compound'])]), '2000HR_M_xcomp'])]
-Token def.
-a. token.text, b. token.lemma_, c. token.pos_, d. token.tag_, e. token.dep_, f.token.shape_, g. token.is_alpha, h. token.is_stop
-0. a.Xe_bus, b.Xe_bus, c.X, d.N, e.nsubj, f.Xx_xxx, g.False, h.False
-1. a.nào, b.nào, c.X, d.P, e.det, f.xxx, g.True, h.True
-2. a.đến, b.đến, c.X, d.E, e.case, f.xxx, g.True, h.True
-3. a.thành_phố, b.thành_phố, c.X, d.N, e.nmod, f.xxxxxxxxx, g.False, h.False
-4. a.Huế, b.Huế, c.X, d.Np, e.compound, f.xxx, g.True, h.False
-5. a.lúc, b.lúc, c.X, d.N, e.ROOT, f.xxx, g.True, h.True
-6. a.2000HR, b.2000HR, c.X, d.M, e.xcomp, f.ddddXX, g.False, h.False
+(S[GAP=<r2>, SEM=<WHQUERY((\f t.DEPART1(d3,f,t) & SOURCE(h6,NAME(h6,'HCMC'),\r f t.DEPART1(r,f,t)) & \f t.ARRIVE1(a3,f,t) & DEST(\r f t.ARRIVE1(r,f,t),NAME(h4,'HUE'))),THE((BUS1(f2) & BUSNAME(h3,'B1'))),WH(h3,HOWLONG1))>, VAR=<d3>]
+  (HOW-LONG-QUERY[SEM=<\x.WH(x,HOWLONG1)>, VAR=<r1>] How long does)
+  (BUS-NP[SEM=<THE((BUS1(f3) & BUSNAME(h2,'B1')))>, VAR=<h2>]
+    (DET[SEM=<THE>] the)
+    (BUS-CNP[SEM=<(BUS1(f2) & BUSNAME(h3,'B1'))>, VAR=<h3>]
+      (BUS-CNP[SEM=<BUS1(f2)>, VAR=<f2>]
+        (BUS-N[SEM=<BUS1>, VAR=<f1>] bus))
+      (BUS-NAME-NP[SEM=<BUSNAME(h2,'B1')>, VAR=<h2>]
+        (BUS-NAME[SEM=<'B1'>, VAR=<h4>] B1))))
+  (BUS-VP[SEM=<(\f t.DEPART1(d2,f,t) & SOURCE(h2,NAME(h2,'HCMC'),\r f t.DEPART1(r,f,t)) & \f t.ARRIVE1(a2,f,t) & DEST(\r f t.ARRIVE1(r,f,t),NAME(h5,'HUE')))>, VAR=<d2>]
+    (BUS-CVP[SEM=<(\f t.DEPART1(d3,f,t) & SOURCE(h3,NAME(h3,'HCMC'),\r f t.DEPART1(r,f,t)) & \f t.ARRIVE1(a3,f,t) & DEST(\r f t.ARRIVE1(r,f,t),NAME(h4,'HUE')))>, VAR=<d3>]
+      (BUS-CVP[SEM=<(\f t.DEPART1(d3,f,t) & SOURCE(h3,NAME(h3,'HCMC'),\r f t.DEPART1(r,f,t)))>, VAR=<d3>]
+        (BUS-CVP-SOURCE[SEM=<(\f t.DEPART1(d2,f,t) & SOURCE(h2,NAME(h2,'HCMC'),\r f t.DEPART1(r,f,t)))>, VAR=<d2>]
+          (BUS-V[SEM=<\r f t.DEPART1(r,f,t)>, VAR=<d2>]
+            (DEPARTURE-V[SEM=<\r f t.DEPART1(r,f,t)>, VAR=<d1>]
+              depart))
+          (BUS-SOURCE[SEM=<SOURCE(h3,NAME(h3,'HCMC'))>, VAR=<h3>]
+            from
+            (CITY-NP[SEM=<NAME(h2,'HCMC')>, VAR=<h2>]
+              (CITY-NAME[SEM=<'HCMC'>, VAR=<h1>] Hồ Chí Minh)
+              (CITY-N[SEM=<CITY>, VAR=<c1>] city)))))
+      (BUS-CVP[SEM=<(\f t.ARRIVE1(a2,f,t) & DEST(\r f t.ARRIVE1(r,f,t),NAME(h2,'HUE')))>, VAR=<a2>]
+        (BUS-CVP-DEST[SEM=<(\f t.ARRIVE1(a3,f,t) & DEST(\r f t.ARRIVE1(r,f,t),NAME(h3,'HUE')))>, VAR=<a3>]
+          (BUS-V[SEM=<\r f t.ARRIVE1(r,f,t)>, VAR=<a2>]
+            (ARRIVE-V[SEM=<\r f t.ARRIVE1(r,f,t)>, VAR=<a1>] arrive))
+          (BUS-DEST[SEM=<\f.DEST(f,NAME(h2,'HUE'))>, VAR=<h2>]
+            in
+            (CITY-NP[SEM=<NAME(h3,'HUE')>, VAR=<h3>]
+              (CITY-NAME[SEM=<'HUE'>, VAR=<h2>] Huế)
+              (CITY-N[SEM=<CITY>, VAR=<c1>] city))))))))
