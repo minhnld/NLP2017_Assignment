@@ -29,12 +29,22 @@ def subtree_matcher(doc,dep,text=''):
     return y
 
 def mainLogic(doc):
-    destFlag=False
     arriveFlag=False
     sourceVpFlag=False
     destVpFlag=False
-
-    (f,typeWh)=('f2','WHICH1') if (subtree_matcher(doc,'det',text='nào') !='') else ('?f','HOWLONG1')
+    busNameNpFlag=False
+    destNpFlag=False
+    d=''
+    t=''
+    a=''
+    time=''
+    nameDepart=''
+    nameArrive=''
+    bVar=''
+    h_BusName=''
+    busName=''
+    (f,typeWh)=('f2','WHICH1') if (subtree_matcher(doc,'det',text='nào') !='') else ('h1','HOWLONG1')
+    
     if (typeWh=='WHICH1'):
         gap=f
     else:
@@ -50,7 +60,8 @@ def mainLogic(doc):
                 t='t2'
             else:
                 t='?t'
-        cityTokenText=['Hồ Chí Minh','Hà Nội','Huế']
+        
+        cityTokenText=['Hồ_Chí_Minh','Hà_Nội','Huế']
         cityTokenDep=['compound','nmod','obl']
         for cT in cityTokenText:
             for cD in cityTokenDep:
@@ -59,18 +70,17 @@ def mainLogic(doc):
                     destNpFlag=True
                     nameArrive= temp
                     break 
+        print(destNpFlag)
+        # Variable('?hDest'),name=Variable('?nameDest')
+
+
     elif (gap=='r2'):
         if (subtree_matcher(doc,'ROOT',text='đến'))!='':
             arriveFlag=True
             a='a3'
 
-            time=subtree_matcher(doc,'xcomp')
-            if time!='':    
-                t='t2'
-            else:
-                t='?t'
-                time='?time'
-
+            time='time'
+            t='t'
             nameArrive=subtree_matcher(doc,'obj')
             if nameArrive!='':    
                 h='h4'
@@ -83,36 +93,76 @@ def mainLogic(doc):
                 nameDepart=subtree_matcher(doc,'nmod')
                 if (nameDepart!=''):
                     sourceVpFlag
+            
+            busName=subtree_matcher(doc,'compound')
+            if busName!='':
+                busNameNpFlag=True
+                bVar='f2'
+                h_BusName='h3'
 
+    # 
 
-        
-        
-                    
     if arriveFlag and not(destVpFlag) and not(sourceVpFlag):                
-        vp=FeatStruct(arrive=FeatStruct(a=a,f=f,t=FeatStruct(t_var=t,time_var=time)))
+        vp=FeatStruct(
+            arrive=FeatStruct(a=a,f=f,t=FeatStruct(t_var=t,time_var=time))
+            )
     else:
         vp=FeatStruct(
-            depart=FeatStruct(d=d,f=f,t=FeatStruct(t_var=t,time_var=time)),
-            source=FeatStruct(bus=Variable('?f'),source=FeatStruct(f=Variable('?f'),name=FeatStruct(h='h6',name=nameDepart)))
-            arrive=FeatStruct(a=a,f=f,t=FeatStruct(t_var=t,time_var=time))
-            dest=FeatStruct(bus=Variable('?f'),source=FeatStruct(f=Variable('?f'),name=FeatStruct(h='h4',name=nameArrive)))
+            depart=FeatStruct(d='d3',f='f1',t=FeatStruct(t_var=t,time_var=time)),
+            source=FeatStruct(bus='h4',sourceName=FeatStruct(f=Variable('?h'),name=Variable('?nameSource'))),
+            arrive=FeatStruct(a='a3',f='f2',t=FeatStruct(t_var=t,time_var=time)),
+            dest=FeatStruct(destName=FeatStruct(f=Variable('?f'),name=FeatStruct(h='h6',name=nameArrive)))
         )
 
-    if destNpFlag:
+    # np=FeatStruct(dest=FeatStruct(bus=Variable('?f'),dest=FeatStruct(f=Variable('?f'),name=FeatStruct(h=Variable('?h'),name=Variable('?name')))))
+    if destNpFlag and not(busNameNpFlag):
         np=FeatStruct(dest=FeatStruct(bus=Variable('?f'),dest=FeatStruct(f=Variable('?f'),name=FeatStruct(h='h3',name=nameArrive))))
+    else:
+        np=FeatStruct(the=FeatStruct(bus=bVar,busname=FeatStruct(h=h_BusName,name=busName)))
+    # print(np)
+    # print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+    # print(vp)
     wh=FeatStruct(whType=FeatStruct(f=Variable('?f'),type=typeWh))
     sem=FeatStruct(query=FeatStruct(vp=vp,np=np,wh=wh))
     var=Variable('?a')
-    result=featStruct(gap,sem,var,arriveFlag=arriveFlag,destFlag=destFlag)
+
+    # arriveFlag=False
+    # sourceVpFlag=False
+    # destVpFlag=False
+    # busNameNpFlag=False
+
+    result=featStruct(gap,sem,var,arriveFlag=arriveFlag,destVpFlag=destVpFlag,sourceVpFlag=sourceVpFlag,busNameNpFlag=busNameNpFlag,destNpFlag=destNpFlag)
     print(result)    
     return result     
             
-def featStruct(gapUp,semUp,varUp,arriveFlag=False,destFlag=False):
+def featStruct(gapUp,semUp,varUp,arriveFlag=False,destVpFlag=False,sourceVpFlag=False,busNameNpFlag=False,destNpFlag=False):
     gap=Variable('?gap')
-    if arriveFlag:
-        vp=FeatStruct(arrive=FeatStruct(a=Variable('?a'),f=Variable('?f'),t=FeatStruct(t_var=Variable('?t'),time_var=Variable('?time'))))
-    if destFlag:
+
+
+    if arriveFlag and not(destVpFlag) and not(sourceVpFlag):                
+        vp=FeatStruct(
+            arrive=FeatStruct(a=Variable('?a'),f=Variable('?f'),t=FeatStruct(t_var=Variable('?t'),time_var=Variable('?time')))
+        )
+    else:
+        vp=FeatStruct(
+            depart=FeatStruct(d=Variable('?d'),f=Variable('?fDep'),t=FeatStruct(t_var=Variable('?t_var_dep'),time_var=Variable('?timeDepart'))),
+            source=FeatStruct(bus=Variable('?h'),sourceName=FeatStruct(f=Variable('?h'),name=Variable('?nameSource'))),
+            arrive=FeatStruct(a=Variable('?a'),f=Variable('?fArr'),t=FeatStruct(t_var=Variable('?t_var_arr'),time_var=Variable('?timeArrive'))),
+            dest=FeatStruct(destName=FeatStruct(f=Variable('?f'),name=FeatStruct(h=Variable('?hDest'),name=Variable('?nameDest'))))
+        )
+
+    if destNpFlag and not(busNameNpFlag):
         np=FeatStruct(dest=FeatStruct(bus=Variable('?f'),dest=FeatStruct(f=Variable('?f'),name=FeatStruct(h=Variable('?h'),name=Variable('?name')))))
+    else:
+        np=FeatStruct(the=FeatStruct(bus=Variable('?b'),busname=FeatStruct(h=Variable('?h_BusName'),name=Variable('?busName'))))
+
+
+# ################################
+#     if arriveFlag:
+#         vp=FeatStruct(arrive=FeatStruct(a=Variable('?a'),f=Variable('?f'),t=FeatStruct(t_var=Variable('?t'),time_var=Variable('?time'))))
+#     if destFlag:
+#         np=FeatStruct(dest=FeatStruct(bus=Variable('?f'),dest=FeatStruct(f=Variable('?f'),name=FeatStruct(h=Variable('?h'),name=Variable('?name')))))
+
     wh=FeatStruct(whType=FeatStruct(f=Variable('?f'),type=Variable('?type')))
     sem=FeatStruct(query=FeatStruct(vp=vp,np=np,wh=wh))
     var=Variable('?a')
@@ -122,10 +172,15 @@ def featStruct(gapUp,semUp,varUp,arriveFlag=False,destFlag=False):
         sem=sem,
         var=var
     )
+    # print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+    # print(para)
+
     paraUpdate=FeatStruct(
         gap=gapUp,
         sem=semUp,
         var=varUp
     )    
+    # print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+    # print(paraUpdate)
     # paraUpdate.unify(para)['sem']['query']['vp']['arrive']['f']
     return paraUpdate.unify(para)

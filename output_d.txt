@@ -1,1 +1,1 @@
-(PRINT-ALL ?r2(BUS ?f2)(ATIME ?f2 HUE ?ta)(DTIME ?f2 HCMC ?td)(RUNTIME ?f2 B1 HCMC HUE))
+(PRINT-ALL ?f2(BUS ?f2)(ATIME ?f2 HCMC ?ta)(DTIME ?f2 ?sd ?td)(RUNTIME ?f2  ?sd HCMC))

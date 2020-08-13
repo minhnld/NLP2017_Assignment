@@ -109,7 +109,7 @@ if __name__ == '__main__':
     
     parser.add_argument(
       '--question',
-      default= "How long does the bus B4 depart from Hồ Chí Minh city arrive in Đà Nẵng city ?",
+      default= "Xe bus nào đến thành phố Huế lúc 20:00HR ?",
       help= "All the question to be parsed."
       # DẠNG 1 Xe bus nào đến thành phố Huế lúc 20:00HR ?
       # 'Which bus to Huế city arrives at 20:00HR ?'
