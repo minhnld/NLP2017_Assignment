@@ -1,1 +1,1 @@
-WHQUERY(((\f t.ARRIVE1(a2 f t) & DEST(\r f t.ARRIVE1(r f t) NAME(h3 'HCMC')))(a2))(f2) BUS1(f2) WH(f2 WHICH1))
+WHQUERY(ARRIVE1(a3 f2 TIME(t2 20:00HR)) (BUS1(f2) & DEST(f2 NAME(h3 'HUE'))) WH(f2 WHICH1))

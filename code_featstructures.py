@@ -27,8 +27,17 @@ def subtree_matcher(doc,dep,text=''):
             if tok.dep_.endswith(dep) and tok.text==text:
                 y = tok.text 
     return y
+def checkHead(doc,text):
+    y=''
+    for tok in doc: 
+        # extract subject
+        if text==tok.text:
+            y=tok.head.text
+    return y
 
 def mainLogic(doc):
+    departFlag=False
+    departVpFlag=False
     arriveFlag=False
     sourceVpFlag=False
     destVpFlag=False
@@ -43,6 +52,8 @@ def mainLogic(doc):
     bVar=''
     h_BusName=''
     busName=''
+    timeDepart=''
+
     (f,typeWh)=('f2','WHICH1') if (subtree_matcher(doc,'det',text='nào') !='') else ('h1','HOWLONG1')
     
     if (typeWh=='WHICH1'):
@@ -60,20 +71,60 @@ def mainLogic(doc):
                 t='t2'
             else:
                 t='?t'
-        
-        cityTokenText=['Hồ_Chí_Minh','Hà_Nội','Huế']
-        cityTokenDep=['compound','nmod','obl']
-        for cT in cityTokenText:
-            for cD in cityTokenDep:
-                temp=subtree_matcher(doc,cD,cT)
-                if temp !='':
-                    destNpFlag=True
-                    nameArrive= temp
-                    break 
-        print(destNpFlag)
+            cityTokenText=['Hồ_Chí_Minh','Hà_Nội','Huế','Đà_nẵng']
+            cityTokenDep=['compound','nmod','obl']
+            ################################################
+            if subtree_matcher(doc,'ROOT',text='xuất_phát')!='' or subtree_matcher(doc,'ROOT',text='đi')!='':
+                departFlag=True
+                d='d3'
+                for cT in cityTokenText:
+                    for cD in cityTokenDep:
+                        temp=subtree_matcher(doc,cD,cT)
+                        if (temp !='') and (checkHead(doc,temp)!='đi'):
+                            destVpFlag=True
+                            nameArrive= temp
+                        elif (temp !='') and (checkHead(doc,temp)=='đi'):
+                            sourceVpFlag=True
+                            nameDepart= temp
+            else:
+                for cT in cityTokenText:
+                    for cD in cityTokenDep:
+                        temp=subtree_matcher(doc,cD,cT)
+                        if temp !='':
+                            destNpFlag=True
+                            nameArrive= temp
+                            break
+                    else:
+                        # Continue if the inner loop wasn't broken.
+                        continue
+                        # Inner loop was broken, break the outer.
+                    break
+
+        elif subtree_matcher(doc,'ROOT',text='xuất_phát')!='' or subtree_matcher(doc,'ROOT',text='đi')!='':
+            departFlag=True
+            d='d3'
+            timeDepart=subtree_matcher(doc,'xcomp')
+            if time!='':    
+                t='t2'
+            else:
+                t='?t'
+            cityTokenText=['Hồ_Chí_Minh','Hà_Nội','Huế']
+            cityTokenDep=['compound','nmod','obl']
+            for cT in cityTokenText:
+                for cD in cityTokenDep:
+                    temp=subtree_matcher(doc,cD,cT)
+                    if temp !='':
+                        departVpFlag=True
+                        nameDepart= temp
+                        break
+                else:
+                    # Continue if the inner loop wasn't broken.
+                    continue
+                    # Inner loop was broken, break the outer.
+                break
+            
+        # print(destNpFlag)
         # Variable('?hDest'),name=Variable('?nameDest')
-
-
     elif (gap=='r2'):
         if (subtree_matcher(doc,'ROOT',text='đến'))!='':
             arriveFlag=True
@@ -100,16 +151,19 @@ def mainLogic(doc):
                 bVar='f2'
                 h_BusName='h3'
 
-    # 
-
     if arriveFlag and not(destVpFlag) and not(sourceVpFlag):                
         vp=FeatStruct(
             arrive=FeatStruct(a=a,f=f,t=FeatStruct(t_var=t,time_var=time))
             )
+    elif departFlag and departVpFlag:
+        vp=FeatStruct(
+            depart=FeatStruct(d='d3',f='f1',t=FeatStruct(t_var=t,time_var=time)),
+            source=FeatStruct(bus='h3',sourceName=FeatStruct(f=Variable('?h'),name=nameDepart))
+        )        
     else:
         vp=FeatStruct(
             depart=FeatStruct(d='d3',f='f1',t=FeatStruct(t_var=t,time_var=time)),
-            source=FeatStruct(bus='h4',sourceName=FeatStruct(f=Variable('?h'),name=Variable('?nameSource'))),
+            source=FeatStruct(bus='h4',sourceName=FeatStruct(f=Variable('?h'),name=nameDepart)),
             arrive=FeatStruct(a='a3',f='f2',t=FeatStruct(t_var=t,time_var=time)),
             dest=FeatStruct(destName=FeatStruct(f=Variable('?f'),name=FeatStruct(h='h6',name=nameArrive)))
         )
@@ -122,7 +176,7 @@ def mainLogic(doc):
     # print(np)
     # print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
     # print(vp)
-    wh=FeatStruct(whType=FeatStruct(f=Variable('?f'),type=typeWh))
+    wh=FeatStruct(whType=FeatStruct(f=f,type=typeWh))
     sem=FeatStruct(query=FeatStruct(vp=vp,np=np,wh=wh))
     var=Variable('?a')
 
@@ -131,17 +185,22 @@ def mainLogic(doc):
     # destVpFlag=False
     # busNameNpFlag=False
 
-    result=featStruct(gap,sem,var,arriveFlag=arriveFlag,destVpFlag=destVpFlag,sourceVpFlag=sourceVpFlag,busNameNpFlag=busNameNpFlag,destNpFlag=destNpFlag)
+    result=featStruct(gap,sem,var,arriveFlag=arriveFlag,destVpFlag=destVpFlag,sourceVpFlag=sourceVpFlag,busNameNpFlag=busNameNpFlag,destNpFlag=destNpFlag,departFlag=departFlag,departVpFlag=departVpFlag)
     print(result)    
     return result     
             
-def featStruct(gapUp,semUp,varUp,arriveFlag=False,destVpFlag=False,sourceVpFlag=False,busNameNpFlag=False,destNpFlag=False):
+def featStruct(gapUp,semUp,varUp,arriveFlag=False,destVpFlag=False,sourceVpFlag=False,busNameNpFlag=False,destNpFlag=False,departFlag=False,departVpFlag=False):
     gap=Variable('?gap')
 
 
     if arriveFlag and not(destVpFlag) and not(sourceVpFlag):                
         vp=FeatStruct(
             arrive=FeatStruct(a=Variable('?a'),f=Variable('?f'),t=FeatStruct(t_var=Variable('?t'),time_var=Variable('?time')))
+        )
+    elif departFlag and departVpFlag:
+        vp=FeatStruct(
+            depart=FeatStruct(d=Variable('?d'),f=Variable('?fDep'),t=FeatStruct(t_var=Variable('?t_var_dep'),time_var=Variable('?timeDepart'))),
+            source=FeatStruct(bus=Variable('?h'),sourceName=FeatStruct(f=Variable('?h'),name=Variable('?nameSource')))
         )
     else:
         vp=FeatStruct(
