@@ -16,7 +16,7 @@ def code_featstructures_to_procedure(logical_tree):
     #[<ApplicationExpression ARRIVE1(a3,f2,TIME(t2,20:00HR))>, <AndExpression (bus1(f2) & DEST(f2,NAME(h3,'Hue')))>, <ApplicationExpression WH(f2,WHICH1)>]
     verb_expression, bus_expression, wh_expression = logical_expression['vp'],logical_expression['np'],logical_expression['wh']
     gap = '?' + logical_tree['gap']
-    
+    cityDict={'Huế':'HUE','Đà_Nẵng':'DANANG','Hồ_Chí_Minh':'HCMC','Đà_nẵng':'DANANG'}
     #---------Check bus Expression------------#
     #     if destNpFlag and not(busNameNpFlag):
     #     np=FeatStruct(dest=FeatStruct(bus=Variable('?f'),dest=FeatStruct(f=Variable('?f'),name=FeatStruct(h='h3',name=nameArrive))))
@@ -40,16 +40,16 @@ def code_featstructures_to_procedure(logical_tree):
             #DEST(f (NAME(a,B)))
             if bus_expression!='':
                 try:
-                    arrival_location = bus_expression['dest']['dest']['name']['name']
+                    arrival_location = cityDict[bus_expression['dest']['dest']['name']['name']]
                 except:
-                    arrival_location = bus_expression['the']['busname']['name']
+                    arrival_location = cityDict[bus_expression['the']['busname']['name']]
             else:
                 arrival_location = ''
                 
         elif  'dest' in verb_pred_list:
             #DEST(f (NAME(a,B)))
-            if verb_expression['dest']['desteName']['f']!='':
-                arrival_location = verb_expression['dest']['desteName']['name']['name']
+            if verb_expression['dest']['destName']['f']!='':
+                arrival_location = cityDict[verb_expression['dest']['destName']['name']['name']]
             # else:
             #     if 'ARRIVE1' in str(verb_expression.first):
             #         arrival_location = verb_expression.second.constants().pop().name.replace("'","")
@@ -57,21 +57,21 @@ def code_featstructures_to_procedure(logical_tree):
             #         arrival_location = verb_expression.second.constants().pop().name.replace("'","")
         # np=FeatStruct(dest=FeatStruct(bus=Variable('?f'),dest=FeatStruct(f=Variable('?f'),name=FeatStruct(h='h3',name=nameArrive))))
         try:
-            if 'busname' in np_preds['the']:
-                busname=np_preds['the']['busname']['name']
+            busname=bus_expression['the']['busname']['name']
+            if gap=='r2':
                 runtime=gap
         except:
             busname=np_preds['dest']['dest']['name']['name']
-            runtime=gap
-
+            if gap=='r2':
+                runtime=gap
         # if 'SOURCE' in np_preds:
         #     #SOURCE(f, NAME(a,B))
         #     departure_location = list(bus_expression.constants())[0].name.replace("'","")
 
         if 'source' in verb_pred_list:
             #SOURCE(f, NAME(a,B))
-            if verb_expression['dest']['destName']['f']!='':
-                departure_location = verb_expression['dest']['destName']['name']['name']
+            if verb_expression['source']['bus']!='':
+                departure_location = cityDict[verb_expression['source']['sourceName']['name']]
             # else:
             #     if 'DEPART1' in str(verb_expression.first):
             #         departure_location = verb_expression.first.constants().pop().name.replace("'","")
@@ -80,10 +80,11 @@ def code_featstructures_to_procedure(logical_tree):
     except:
         if 'dest' in verb_pred_list:
             #DEST(f (NAME(a,B)))
-            arrival_location = verb_expression['dest']['destName']['name']['name']
+            arrival_location = cityDict[verb_expression['dest']['destName']['name']['name']]
         else:
+            pass
             #SOURCE(f, NAME(a,B))
-            departure_location = verb_expression['source']['sourceName']['name']
+            # departure_location = cityDict[bus_expression['dest']['dest']['name']['name']]
             
     #In case of this assignment, this condition will be always TRUE
     #because time must be specified or be asked in all questions
@@ -112,7 +113,7 @@ def code_featstructures_to_procedure(logical_tree):
             pass
     except:
         pass
-    
+
     #--------Fill with parsed values-----------------#
     bus = "(BUS {})".format(f)
     arrival = "(ATIME {} {} {})".format(f, arrival_location, arrival_time)
