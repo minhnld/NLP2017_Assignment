@@ -308,10 +308,3 @@ Result:
 - Maybe chat bot like this. why not? :)
 
 ![Animated Simulation](images/demo.gif)
-### 7. License
-
-This project is under [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0) (Inherit from NLTK)
-
-2017 Hoàng Lê Hải Thanh (Thanh Hoang Le Hai) aka GhostBB
-
-If there are any problems, contact me at mail@hoanglehaithanh.com or 1413492@hcmut.edu.vn 
