@@ -37,11 +37,11 @@ Some special cases:
 #### There are two ways of running the program:
 Use default arguments:
 ```sh
-$python3 main.py
+python main.py
 ```
 Use custom arguments: 
 ```sh
-$python3 main.py --question [question] --rule_file_name [rule_file_name] --language ['english','vietnamese'] --visualize ['on','off']
+python main.py --question [question] --rule_file_name [rule_file_name] --language ['english','vietnamese'] --visualize ['on','off']
 ```
 Usage:
 - ```--question``` : The input question in English or Vietnamese. Default: "*Which flight to Huế city arrives at 20:00HR ?*"
