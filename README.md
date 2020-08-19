@@ -127,7 +127,7 @@ NLTK spaCy Parse Tree
 Thời_gian_N_dep Huế_Np_obj B1_Ny_obj                từ_E_case
 
 ```
-If you choose the --visualize 'on' parameter, the output open your browser enter localhost:5000, the result show like this picture:  &nbsp;
+If you choose the --visualize 'on' parameter, you need to open your browser enter localhost:5000, the result show like this picture:  &nbsp;
 ``` console 
 Using the 'dep' visualizer
 Serving on http://0.0.0.0:5000 ...
