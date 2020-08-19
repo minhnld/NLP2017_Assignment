@@ -34,6 +34,27 @@ Some special cases:
  - [README.md](README.md) : This file, obiviously :)
 
 ### 4. Installation
+#### Dependency grammar Installation:
+1. Install spaCy
+```bash 
+pip install spacy==2.2.3
+```
+2. Install pyvi
+```bash
+pip install pyvi
+```
+3. Download vivi model directly using pip:
+```bash 
+pip install https://github.com/trungtv/vi_spacy/raw/master/packages/vi_spacy_model-0.2.1/dist/vi_spacy_model-0.2.1.tar.gz
+```
+Voila !! done </br>
+But if you using anaconda virtual enviroment, the installation process is not yet done, Run this command or manually copy the vivi model package that you has just downloaded in step 3 into python package management (pip or something else) folder.
+```bash 
+python -m spacy link vi_spacy_model vi_spacy_model
+```
+##### spaCy doc
+For more infomation please refer to https://spacy.io/usage for documentation
+and https://spacy.io/api/annotation#pos-tagging (Syntactic Dependency Parsing/Universal Part-of-speech Tags) , https://universaldependencies.org/vi/dep/  for tag definition.
 #### There are two ways of running the program:
 Use default arguments:
 ```sh
@@ -61,36 +82,16 @@ also if it doesn't work try to set the config of your local machine's python to 
 
 If the grammar rules is correct and the question can be parsed, all the results of 5 phases (*1.create parser, 2.create parsed tree, 3.create logical form, 4.create procedure semantics form, 5.query result*) will be printed as well as written to files.
 
-#### Dependency grammar Installation:
-1. Install spaCy
-```bash 
-pip install spacy==2.2.3
-```
-2. Install pyvi
-```bash
-pip install pyvi
-```
-3. Download vivi model directly using pip:
-```bash 
-pip install https://github.com/trungtv/vi_spacy/raw/master/packages/vi_spacy_model-0.2.1/dist/vi_spacy_model-0.2.1.tar.gz
-```
-Voila !! done </br>
-But if you using anaconda virtual enviroment, the installation process is not yet done, Run this command or manually copy the vivi model package that you has just downloaded in step 3 into python package management (pip or something else) folder.
-```bash 
-python -m spacy link vi_spacy_model vi_spacy_model
-```
-##### spaCy doc
-For more infomation please refer to https://spacy.io/usage for documentation
-and https://spacy.io/api/annotation#pos-tagging (Syntactic Dependency Parsing/Universal Part-of-speech Tags) , https://universaldependencies.org/vi/dep/  for tag definition.
+
 ### 5. Result
 ##### Database:
 - These information are given from the assignment's description:
-  - "(BUS B1)","(ATIME B1 HUE 22:00HR)","(DTIME B1 HCMC 10:00HR)","(RUN-TIME B1 HCMC HUE 12:00HR)",
-  - "(BUS B2)","(ATIME B2 HUE 22:30HR)","(DTIME B2 HCMC 12:30HR)","(RUN-TIME B2 HCMC HUE 10:00HR)",
-  - "(BUS B3)","(ATIME B3 HCMC 05:00HR)","(DTIME B3 DANANG 19:00HR)","(RUN-TIME B3 DANANG HCMC 14:00HR)",
-  - "(BUS B4)","(ATIME B4 HCMC 5:30HR)","(DTIME B4 DANANG 17:30HR)","(RUN-TIME B4 DANANG HCMC 12:00HR)",
-  - "(BUS B5)","(ATIME B5 DANANG 13:30HR)","(DTIME B5 HUE 08:30HR)","(RUN-TIME B5 HUE DANANG 5:00HR)",
-  - "(BUS B6)","(ATIME B6 DANANG 9:30HR)","(DTIME B6 HUE 5:30HR)","(RUN-TIME B6 HUE DANANG 4:00HR)",
+  - "(BUS B1)","(ATIME B1 HUE 22:00HR)","(DTIME B1 HCMC 10:00HR)","(RUN-TIME B1 HCMC HUE 12:00HR)"
+  - "(BUS B2)","(ATIME B2 HUE 22:30HR)","(DTIME B2 HCMC 12:30HR)","(RUN-TIME B2 HCMC HUE 10:00HR)"
+  - "(BUS B3)","(ATIME B3 HCMC 05:00HR)","(DTIME B3 DANANG 19:00HR)","(RUN-TIME B3 DANANG HCMC 14:00HR)"
+  - "(BUS B4)","(ATIME B4 HCMC 5:30HR)","(DTIME B4 DANANG 17:30HR)","(RUN-TIME B4 DANANG HCMC 12:00HR)"
+  - "(BUS B5)","(ATIME B5 DANANG 13:30HR)","(DTIME B5 HUE 08:30HR)","(RUN-TIME B5 HUE DANANG 5:00HR)"
+  - "(BUS B6)","(ATIME B6 DANANG 9:30HR)","(DTIME B6 HUE 5:30HR)","(RUN-TIME B6 HUE DANANG 4:00HR)"
   - "(BUS B7)","(ATIME B7 HCMC 20:30HR)","(DTIME B7 HUE 8:30HR)","(RUN-TIME B7 HUE HCMC 12:00HR)"
 
 ##### Result of the assignment (default parameters):
