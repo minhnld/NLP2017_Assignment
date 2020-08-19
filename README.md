@@ -74,7 +74,8 @@ pip install pyvi
 ```bash 
 pip install https://github.com/trungtv/vi_spacy/raw/master/packages/vi_spacy_model-0.2.1/dist/vi_spacy_model-0.2.1.tar.gz
 ```
-4. Run this command or manually copy the vivi model package that you has just downloaded in step 3 into ... folder.
+Voila !! done </br>
+But if you using anaconda virtual enviroment, the installation process is not yet done, Run this command or manually copy the vivi model package that you has just downloaded in step 3 into python package management (pip or something else) folder.
 ```bash 
 python -m spacy link vi_spacy_model vi_spacy_model
 ```
