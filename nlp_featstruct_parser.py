@@ -58,11 +58,11 @@ def code_featstructures_to_procedure(logical_tree):
         # np=FeatStruct(dest=FeatStruct(bus=Variable('?f'),dest=FeatStruct(f=Variable('?f'),name=FeatStruct(h='h3',name=nameArrive))))
         try:
             busname=bus_expression['the']['busname']['name']
-            if gap=='r2':
+            if gap=='?r2':
                 runtime=gap
         except:
             busname=np_preds['dest']['dest']['name']['name']
-            if gap=='r2':
+            if gap=='?r2':
                 runtime=gap
         # if 'SOURCE' in np_preds:
         #     #SOURCE(f, NAME(a,B))

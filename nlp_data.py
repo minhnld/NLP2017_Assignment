@@ -67,8 +67,8 @@ def retrieve_result(semantics):
 
     database = categorize_database(raw_database_)
     # print(database['runtime'])
-    procedure_semantics['arrival_time'].replace(':','')
-    procedure_semantics['departure_time'].replace(':','')
+    procedure_semantics['arrival_time']=procedure_semantics['arrival_time'].replace(':','')
+    procedure_semantics['departure_time']=procedure_semantics['departure_time'].replace(':','')
     # print(procedure_semantics)
     #remove unknown args: ?t ?f ?s
     query =  procedure_semantics['query']

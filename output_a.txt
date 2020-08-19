@@ -62,7 +62,7 @@ Grammar with 101 productions (start state = S[])
     TIME-MOD[SEM=<3:30HR>, VAR=<t1>] -> '3:30HR'
     TIME-MOD[SEM=<4:00HR>, VAR=<t1>] -> '4:00HR'
     TIME-MOD[SEM=<4:30HR>, VAR=<t1>] -> '4:30HR'
-    TIME-MOD[SEM=<5:00HR>, VAR=<t1>] -> '5:00HR'
+    TIME-MOD[SEM=<05:00HR>, VAR=<t1>] -> '05:00HR'
     TIME-MOD[SEM=<5:30HR>, VAR=<t1>] -> '5:30HR'
     TIME-MOD[SEM=<6:00HR>, VAR=<t1>] -> '6:00HR'
     TIME-MOD[SEM=<6:30HR>, VAR=<t1>] -> '6:30HR'

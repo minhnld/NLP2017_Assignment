@@ -1,12 +1,17 @@
-[Tree('đi_V_ROOT', [Tree('xe_N_nsubj', ['Những_L_det', 'nào_P_det']), Tree('Đà_nẵng_Np_obl', ['từ_E_case']), Tree('thành_phố_N_obl', ['đến_E_case', 'Huế_Np_compound'])])]
-Token def.
-a. token.text, b. token.lemma_, c. token.pos_, d. token.tag_, e. token.dep_, f.token.shape_, g. token.is_alpha, h. token.is_stop
-0. a.Những, b.Những, c.X, d.L, e.det, f.xxxxx, g.True, h.True
-1. a.xe, b.xe, c.X, d.N, e.nsubj, f.xx, g.True, h.False
-2. a.nào, b.nào, c.X, d.P, e.det, f.xxx, g.True, h.True
-3. a.đi, b.đi, c.X, d.V, e.ROOT, f.xx, g.True, h.False
-4. a.từ, b.từ, c.X, d.E, e.case, f.xx, g.True, h.True
-5. a.Đà_nẵng, b.Đà_nẵng, c.X, d.Np, e.obl, f.Xx_xxxx, g.False, h.False
-6. a.đến, b.đến, c.X, d.E, e.case, f.xxx, g.True, h.True
-7. a.thành_phố, b.thành_phố, c.X, d.N, e.obl, f.xxxxxxxxx, g.False, h.False
-8. a.Huế, b.Huế, c.X, d.Np, e.compound, f.xxx, g.True, h.False
+(S[GAP=<f2>, SEM=<WHQUERY(ARRIVE1(a3,f2,TIME(t2,05:00HR)),(BUS1(f2) & DEST(f2,NAME(h2,'HCMC'))),WH(f2,WHICH1))>, VAR=<a3>]
+  (WHICH-QUERY[SEM=<\x.WH(x,WHICH1)>] Which)
+  (BUS-NP[SEM=<(BUS1(f3) & DEST(f3,NAME(h3,'HCMC')))>, VAR=<f3>]
+    (BUS-CNP[SEM=<(BUS1(f2) & DEST(f2,NAME(h2,'HCMC')))>, VAR=<f2>]
+      (BUS-CNP[SEM=<BUS1(f2)>, VAR=<f2>]
+        (BUS-N[SEM=<BUS1>, VAR=<f1>] bus))
+      (BUS-DEST[SEM=<\f.DEST(f,NAME(h3,'HCMC'))>, VAR=<h3>]
+        to
+        (CITY-NP[SEM=<NAME(h2,'HCMC')>, VAR=<h2>]
+          (CITY-NAME[SEM=<'HCMC'>, VAR=<h1>] Hồ Chí Minh)
+          (CITY-N[SEM=<CITY>, VAR=<c1>] city)))))
+  (BUS-VP[SEM=<\r f.ARRIVE1(r,f,TIME(t3,05:00HR))>, VAR=<a2>]
+    (BUS-V[SEM=<\r f t.ARRIVE1(r,f,t)>, VAR=<a2>]
+      (ARRIVE-V[SEM=<\r f t.ARRIVE1(r,f,t)>, VAR=<a1>] arrives))
+    (BUS-TIME[SEM=<TIME(t2,05:00HR)>, VAR=<t2>]
+      (P-TIME[SEM=<AT>] at)
+      (TIME-MOD[SEM=<05:00HR>, VAR=<t1>] 05:00HR))))

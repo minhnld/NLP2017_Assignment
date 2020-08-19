@@ -133,7 +133,7 @@ if __name__ == '__main__':
     
     parser.add_argument(
       '--question',
-      default= "Những xe nào đi từ Đà nẵng đến thành phố Huế ?.",
+      default= "Which bus to Hồ Chí Minh city arrives at 05:00HR ?",
       help= "All the question to be parsed."
       # 
       #Thời gian xe bus B1 từ Hồ Chí Minh đến Huế ?
@@ -184,7 +184,7 @@ if __name__ == '__main__':
 
     parser.add_argument(
       '--language',
-      default= "vietnamese",
+      default= "english",
       help= "You can choose between english and vietnamese"
       )
     

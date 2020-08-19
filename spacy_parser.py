@@ -1,5 +1,6 @@
 import spacy
 from nltk import Tree
+from spacy import displacy
 
 def nltk_spacy_tree(node):
     def tok_format(tok):
@@ -26,14 +27,15 @@ def nltk_spacy_tree_visualize(sent,nlp):
         else:
             return token_format(node)
 
-    tree = [to_nltk_tree(sent.root) for sent in doc.sents]
+    # tree = [to_nltk_tree(sent.root) for sent in doc.sents]
     # The first item in the list is the full tree
-    tree[0].draw()
+    # tree[0].draw()
+    displacy.serve(doc, style="dep")
+    
 
 def spacy_viet(inputText,visualSwitch):
     nlp = spacy.load('vi_spacy_model')
     token_def="Token def."
-    print("\n"+token_def)
     token_def+='\n'
     # print('1. token.text, 2. token.lemma_, 3. token.pos_, 4. token.tag_, 5. token.dep_, 6.token.shape_, 7. token.is_alpha, 8. token.is_stop')
     # doc = nlp(inputText)
